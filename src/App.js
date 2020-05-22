@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import Chat from "./pages/chat/Chat";
+import EnterChat from "./pages/enterChat/EnterChat";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { auth } from "./services/Firebase";
+
+class App extends Component {
+  state = {
+    user: null,
+  };
+
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      this.setState({ user: user });
+    });
+  }
+
+  render() {
+    if (this.state.user) {
+      return <Chat user={this.state.user} />;
+    } else {
+      return <EnterChat />;
+    }
+  }
 }
 
 export default App;

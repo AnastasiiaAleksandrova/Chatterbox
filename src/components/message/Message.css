@@ -1,0 +1,6 @@
+.message {
+    border: grey solid 1px;
+    padding: .5em;
+    margin: .5em;
+    max-width: 50em;
+}
