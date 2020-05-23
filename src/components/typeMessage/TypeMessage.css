@@ -1,8 +1,34 @@
 .typeMessage {
-    display: flex;
+  text-align: center;
+}
+.textInput,
+.submitInput {
+  padding: 0.5em;
+  margin: 0.5em;
 }
 
-.textInput, .submitInput {
-    padding: .5em;
-    margin: 2em .5em;
+.textInput {
+  height: 5em;
+  width: 70%;
+  font-family: sans-serif;
+}
+
+.submitInput {
+  font-weight: bold;
+  width: 5em;
+  border: none;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.submitInput:hover {
+  box-shadow: inset 0 -5px 10px 5px lightgray;
+}
+
+.submitInput:focus {
+  outline: none;
+}
+
+.submitInput:active {
+  background-color: lightgray;
 }

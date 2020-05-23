@@ -5,10 +5,10 @@ function TypeMessage(props) {
   return (
     <form className="typeMessage">
       <div>
-        <input
+        <textarea
           className="textInput"
           type="text"
-          placeholder="type your message"
+          placeholder="Type your message"
           value={props.value}
           onChange={props.onChange}
           onKeyDown={props.onKeyDown}
@@ -17,7 +17,7 @@ function TypeMessage(props) {
       <div>
         <input
           type="submit"
-          value="send"
+          value="Send"
           className="submitInput"
           onClick={props.onClick}
         />

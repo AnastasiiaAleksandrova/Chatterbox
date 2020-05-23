@@ -1,0 +1,31 @@
+.enterChatForm {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 25em;
+  margin-top: 10em;
+  background-color: white;
+}
+
+.enterChatSwitchTabs {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.signUp,
+.logIn {
+  width: 50%;
+  padding: 1em;
+  box-shadow: inset 0 -10px 20px -10px grey;
+  cursor: pointer;
+}
+
+.signUpActive,
+.logInActive {
+  width: 50%;
+  padding: 1em;
+  cursor: pointer;
+}
+
+.form {
+  padding: 2em 0;
+}

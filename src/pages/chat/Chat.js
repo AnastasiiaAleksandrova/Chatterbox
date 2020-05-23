@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { db } from "../../services/Firebase";
 import Message from "../../components/message/Message";
-import TypeMessage from "../../components/typeMessage/TypeMessage";
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 import "./Chat.css";
 
 import { auth } from "../../services/Firebase";
@@ -9,27 +10,48 @@ import { auth } from "../../services/Firebase";
 class Chat extends Component {
   constructor(props) {
     super(props);
+    this.messagesEndRef = React.createRef();
+    console.log("#0");
     this.state = {
       messages: [],
+      users: {},
       input: "",
     };
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.sendMessagge = this.sendMessage.bind(this);
     this.handleEnterPress = this.handleEnterPress.bind(this);
+    this.scrollToBottom = this.scrollToBottom.bind(this);
   }
 
   componentDidMount() {
+    db.ref("users").on("value", (snapshot) => {
+      console.log(snapshot.val());
+      this.setState({ users: snapshot.val() });
+    });
     this.fetchMessages();
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+  componentWillUnmount() {
+    db.ref("/").off();
+  }
+
+  scrollToBottom() {
+    this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }
 
   fetchMessages() {
     db.ref("messages/").on("value", (snapshot) => {
-      console.log(snapshot.val());
       let messages = Object.values(snapshot.val() || {});
       messages.sort((a, b) => {
         return a.time - b.time;
       });
       this.setState({ messages: messages });
+      console.log("#2");
     });
   }
 
@@ -45,9 +67,10 @@ class Chat extends Component {
 
   sendMessage(event) {
     event.preventDefault();
+    console.log(this.props.user);
     let messageRef = db.ref("messages").push();
     messageRef.set({
-      userId: 1,
+      userId: this.props.user.uid,
       time: Date.now(),
       text: this.state.input,
     });
@@ -59,24 +82,30 @@ class Chat extends Component {
       console.log(error.message);
     });
   }
+
   render() {
     let result = this.state.messages.map((message, index) => {
-      return <Message message={message} key={index} />;
+      return (
+        <Message
+          message={message}
+          key={index}
+          username={this.state.users[message.userId].name}
+          me={this.props.user.uid}
+        />
+      );
     });
+    console.log("#1");
     return (
       <div>
+        <Header onLogoutClick={this.logOut} />
         <div className="chat">{result}</div>
-        <div>
-          <TypeMessage
-            onChange={this.handleInputChange}
-            value={this.state.input}
-            onKeyDown={this.handleEnterPress}
-            onClick={this.sendMessagge}
-          />
-        </div>
-        <div>
-          <button onClick={this.logOut}>Log Out</button>
-        </div>
+        <div ref={this.messagesEndRef} />
+        <Footer
+          onChange={this.handleInputChange}
+          value={this.state.input}
+          onKeyDown={this.handleEnterPress}
+          onClick={this.sendMessagge}
+        />
       </div>
     );
   }

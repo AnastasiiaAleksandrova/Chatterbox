@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { auth } from "../../services/Firebase";
+import "./Forms.css";
 
 class LogInForm extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class LogInForm extends Component {
 
   render() {
     return (
-      <form>
+      <form className="logInForm">
         <div>
           <input
             type="email"
@@ -43,6 +44,7 @@ class LogInForm extends Component {
         </div>
         <div>
           <input
+            className="submit"
             type="password"
             name="password"
             placeholder="Your password"
@@ -58,7 +60,7 @@ class LogInForm extends Component {
             onClick={this.handleAction}
           />
         </div>
-        <div>{this.state.error}</div>
+        <div className="errorMessage">{this.state.error}</div>
       </form>
     );
   }
