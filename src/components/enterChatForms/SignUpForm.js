@@ -21,14 +21,12 @@ class SignUpForm extends Component {
     auth
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then((userCred) => {
-        console.log(`UserCreds: ${JSON.stringify(userCred)}`);
         return db.ref(`users/${userCred.user.uid}`).set({
           name: this.state.name,
         });
       })
       .catch((error) => {
         this.setState({ error: error.message });
-        console.log(error.message);
       });
   }
 

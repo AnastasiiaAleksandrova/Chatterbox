@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import Chat from "./pages/chat/Chat";
 import EnterChat from "./pages/enterChat/EnterChat";
 

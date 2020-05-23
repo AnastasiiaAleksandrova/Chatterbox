@@ -12,12 +12,10 @@ class EnterChat extends Component {
   }
 
   toggleLogIn() {
-    console.log("login");
     return this.state.isSignUp ? "logIn" : "logInActive";
   }
 
   toggleSignUp() {
-    console.log("signup");
     return this.state.isSignUp ? "signUpActive" : "signUp";
   }
 

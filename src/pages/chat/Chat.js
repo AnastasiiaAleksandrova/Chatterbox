@@ -11,7 +11,6 @@ class Chat extends Component {
   constructor(props) {
     super(props);
     this.messagesEndRef = React.createRef();
-    console.log("#0");
     this.state = {
       messages: [],
       users: {},
@@ -26,7 +25,6 @@ class Chat extends Component {
 
   componentDidMount() {
     db.ref("users").on("value", (snapshot) => {
-      console.log(snapshot.val());
       this.setState({ users: snapshot.val() });
     });
     this.fetchMessages();
@@ -51,7 +49,6 @@ class Chat extends Component {
         return a.time - b.time;
       });
       this.setState({ messages: messages });
-      console.log("#2");
     });
   }
 
@@ -67,7 +64,6 @@ class Chat extends Component {
 
   sendMessage(event) {
     event.preventDefault();
-    console.log(this.props.user);
     let messageRef = db.ref("messages").push();
     messageRef.set({
       userId: this.props.user.uid,
@@ -78,9 +74,7 @@ class Chat extends Component {
   }
 
   logOut() {
-    auth.signOut().catch((error) => {
-      console.log(error.message);
-    });
+    auth.signOut().catch((error) => {});
   }
 
   render() {
@@ -94,7 +88,7 @@ class Chat extends Component {
         />
       );
     });
-    console.log("#1");
+
     return (
       <div>
         <Header onLogoutClick={this.logOut} />

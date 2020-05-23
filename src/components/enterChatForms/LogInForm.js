@@ -20,14 +20,12 @@ class LogInForm extends Component {
     auth
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .catch((error) => {
-        console.log(error.message);
         this.setState({ error: error.message });
       });
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
-    console.log(this.state);
   }
 
   render() {
