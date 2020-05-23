@@ -3,6 +3,8 @@ import { db } from "../../services/Firebase";
 import Message from "../../components/message/Message";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import firebase from "firebase";
+
 import "./Chat.css";
 
 import { auth } from "../../services/Firebase";
@@ -64,11 +66,12 @@ class Chat extends Component {
 
   sendMessage(event) {
     event.preventDefault();
+
     let messageRef = db.ref("messages").push();
     messageRef.set({
       userId: this.props.user.uid,
-      time: Date.now(),
       text: this.state.input,
+      time: firebase.database.ServerValue.TIMESTAMP,
     });
     this.setState({ input: "" });
   }
